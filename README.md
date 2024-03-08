@@ -18,7 +18,32 @@ It can be installed on a Linux hardware with the following one line command:
 ```bash
 curl -sSL https://install.pi-hole.net | bash
 ```
+From there, you will be guided through the installation process of the Pi-hole.
 
+Once the installation is done you will need to login on your router first and configure the Pi-Hole as the preferred DNS-Server. On one side for the internet access: <br>
+Here you have to enter the IP-address of your Pi-Hole (both IPv4 and IPv6).
+
+![Tab for configuring DNS-Server for the internet access on the router](assets/screenshots/dns_config_router1.png)
+
+Similar goes for the IP-address-configurations for your home network, so other devices know where to ask for resolving your local domains: 
+
+![Tab for configuring DNS-Server in the home-network on the router](assets/screenshots/dns_config_router2.png)
+
+### IPv4
+
+![Tab for configuring the IPv4 local DNS-Server](assets/screenshots/dns_config_ipv4.png)
+
+### IPv6
+
+![Tab for configuring the IPv6 local DNS-Server](assets/screenshots/dns_config_ipv6.png)
+
+> **Note:** There are different router types, with different interfaces. In this example we will be using a Fritz-Box. If you have a different router, the configurations might be located differently.
+
+After configuring your router you can go to the web-interface of your Pi-hole and add your local domain records. Simply go to `Local DNS` and `DNS Records` on the side nav. Here you can add your local domain and link it to the IP-address of your local server.
+
+![Local DNS records page of the Pi-Hole](assets/screenshots/local_dns_records_pihole.png)
+
+Now when you enter the url of your local domain the Pi-Hole connects you with your local server. 
 
 ## Server Setup
 HTTP and HTTPS communicates on port 80 and 443 by default. This means that regularly, only a single process can on the machine can serve a website on one of those ports.
