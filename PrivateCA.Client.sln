@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrivateCA.Client", "PrivateCA.Client\PrivateCA.Client.csproj", "{052CC19C-7BC1-4806-A91F-0487A1B9EBF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrivateCA.API", "PrivateCA.API\PrivateCA.API.csproj", "{25372668-F5E6-4F78-91B1-C8CFD8B5E4D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrivateCA.Core", "PrivateCA.Core\PrivateCA.Core.csproj", "{C8B83CAF-870D-4526-8C70-E3FEE770A5C1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{052CC19C-7BC1-4806-A91F-0487A1B9EBF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{052CC19C-7BC1-4806-A91F-0487A1B9EBF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{052CC19C-7BC1-4806-A91F-0487A1B9EBF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{052CC19C-7BC1-4806-A91F-0487A1B9EBF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25372668-F5E6-4F78-91B1-C8CFD8B5E4D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25372668-F5E6-4F78-91B1-C8CFD8B5E4D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25372668-F5E6-4F78-91B1-C8CFD8B5E4D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25372668-F5E6-4F78-91B1-C8CFD8B5E4D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8B83CAF-870D-4526-8C70-E3FEE770A5C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8B83CAF-870D-4526-8C70-E3FEE770A5C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8B83CAF-870D-4526-8C70-E3FEE770A5C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8B83CAF-870D-4526-8C70-E3FEE770A5C1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
