@@ -9,7 +9,16 @@ To get started issuing your own certificates, there are only a few steps:
 - [Trusting the Certificates](#trusting-the-certificates)
 
 ## DNS Setup
-tbd PIHOLE
+In order to have custom domain names without having to access a public domain, you will have to setup your own DNS server.
+
+This is possible with a [Pi-hole](https://github.com/pi-hole/pi-hole) for example. The Pi-hole gives you the extra advantage of also having network-wide ad blocking.
+
+It can be installed on a Linux hardware with the following one line command:
+
+```bash
+curl -sSL https://install.pi-hole.net | bash
+```
+
 
 ## Server Setup
 HTTP and HTTPS communicates on port 80 and 443 by default. This means that regularly, only a single process can on the machine can serve a website on one of those ports.
