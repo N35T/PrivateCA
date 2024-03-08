@@ -12,11 +12,11 @@ To get started issuing your own certificates, there are only a few steps:
 tbd PIHOLE
 
 ## Server Setup
-HTTP and HTTPS communicates on port 80 and 443 by default. This means that regulary, only a single process can on the machine can serve a website on one of those ports.
+HTTP and HTTPS communicates on port 80 and 443 by default. This means that regularly, only a single process can on the machine can serve a website on one of those ports.
 
-Domains can only be pointed to an ip adress and default to port 80 when `http://` or port 443 when `https://` is used. This rules out using different ports to expose different services!
+Domains can only be pointed to an ip address and default to port 80 when `http://` or port 443 when `https://` is used. This rules out using different ports to expose different services!
 
-To solve this problem you can use a simple webserver like [NGINX](https://docs.nginx.com/nginx/admin-guide/web-server/). This listens to requests on port 80/443, looks at the incoming domain of the request and routes it to the corresponding port of the service.
+To solve this problem you can use a simple proxy like [NGINX](https://docs.nginx.com/nginx/admin-guide/web-server/). This listens to requests on port 80/443, looks at the incoming domain of the request and routes it to the corresponding port of the service.
 
 Example: Service1 running on port 5001, Service2 running on port 5002
 
