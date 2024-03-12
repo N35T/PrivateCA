@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using PrivateCA.Core.DTOs;
 
 namespace PrivateCA.Client;
 

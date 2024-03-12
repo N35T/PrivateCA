@@ -1,4 +1,5 @@
-﻿using PrivateCA.Core.OpenSSL;
+﻿using PrivateCA.Core.DTOs;
+using PrivateCA.Core.OpenSSL;
 
 namespace PrivateCA.Client;
 
