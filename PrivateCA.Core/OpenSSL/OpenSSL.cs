@@ -4,10 +4,10 @@ namespace PrivateCA.Core.OpenSSL;
 
 public static class OpenSSL {
 
-    private static string GetCAKeyName(string CAName, string path) {
+    public static string GetCAKeyName(string CAName, string path) {
         return Path.Combine(path, CAName + ".ca.key");
     }
-    private static string GetCACertName(string caName, string path) {
+    public static string GetCACertName(string caName, string path) {
         return Path.Combine(path, caName + ".ca.crt");
     }
 
