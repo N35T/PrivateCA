@@ -16,24 +16,39 @@ if (app.Environment.IsDevelopment()) {
     app.UseSwaggerUI();
 }
 
+var workerpath = "/worker/temp/";
+var caPath = "/ca/";
+var caName = "peter";
+
 app.UseHttpsRedirection();
 
 app.MapGet("/signcsr", (CsrDTO data) => {
 
-    var csrPath = "/etc/privateca/csrContent";
-    var extPath = "/etc/privateca/extContent";
+    var guid = Guid.NewGuid().ToString();
+    var workingOn = Path.Combine(workerpath, guid);
+    var certContent = "";
 
-    File.WriteAllText(csrPath, data.CsrContent); 
-    File.WriteAllText(extPath, data.ExtContent); 
-    var outPath = "/etc/privateca/certContent";
+    Directory.CreateDirectory(workingOn);
 
-    var caPath = "/etc/privateca/";
-    var caName = "peter";
+    try {
+        var csrPath = Path.Combine(workingOn, "csrContent");
+        var extPath = Path.Combine(workingOn, "extContent");
 
-    OpenSSL.SignCSRWithCAKey(csrPath, extPath, outPath, caPath, caName, data.Password);
+        File.WriteAllText(csrPath, data.CsrContent); 
+        File.WriteAllText(extPath, data.ExtContent);
 
-    var certContent = File.ReadAllText(outPath); 
-    return new CsrResponseDTO(certContent); ;
+        var outPath = Path.Combine(workingOn, "certContent");
+
+        OpenSSL.SignCSRWithCAKey(csrPath, extPath, outPath, caPath, caName, data.Password);
+
+        certContent = File.ReadAllText(outPath);
+    } catch {
+        
+    }
+    finally { 
+        Directory.Delete(workingOn);
+    }
+    return new CsrResponseDTO(certContent);
 });
     // .WithName("SignCertificate")
     // .WithOpenApi();
