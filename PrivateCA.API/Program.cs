@@ -16,9 +16,9 @@ if (app.Environment.IsDevelopment()) {
     app.UseSwaggerUI();
 }
 
-var workerpath = "/worker/temp/";
-var caPath = "/ca/";
-var caName = "peter";
+var workerpath = "/worker/temp/"; // path from appsettings
+var caPath = "/ca/"; // path from appsettings
+var caName = "peter"; // CA-NAME from appsettings
 
 async Task<string> GetCertContentAsync(CsrDTO data, string workingOn) {
     var csrPath = Path.Combine(workingOn, "csrContent");
@@ -35,21 +35,21 @@ async Task<string> GetCertContentAsync(CsrDTO data, string workingOn) {
     return certContent;
 }
 
-static void CheckIfCaExists(string password, string caPath, string caName) {
+void CheckIfCaExists() {
     var caKeyName = OpenSSL.GetCAKeyName(caName, caPath);
     var caCertName = OpenSSL.GetCACertName(caName, caPath);
     if (!Path.Exists(caKeyName)) {
         OpenSSL.GenerateCAPrivateKey(caName, caPath, password);
     }
     if (!Path.Exists(caCertName)) {
-        OpenSSL.GenerateRootCertificate(caName, caPath, "N35T", password);
+        OpenSSL.GenerateRootCertificate(caName, caPath, "N35T", password); // ISSUER from appsettings
     }
 }
 
 app.UseHttpsRedirection();
 
 app.MapGet("/signcsr", async (CsrDTO data) => {
-    CheckIfCaExists(data.Password, caPath, caName);
+    CheckIfCaExists(); // PW from appsettings
 
     var guid = Guid.NewGuid().ToString();
     var workingOn = Path.Combine(workerpath, guid);
@@ -64,6 +64,12 @@ app.MapGet("/signcsr", async (CsrDTO data) => {
     }
 
     return new CsrResponseDTO(certContent);
+});
+
+app.MapGet("/pubkey", async () => {
+    CheckIfCaExists();
+    var pubkey = await File.ReadAllTextAsync(OpenSSL.GetCACertName(caName, caPath));
+    return pubkey;
 });
 
 app.Run();
