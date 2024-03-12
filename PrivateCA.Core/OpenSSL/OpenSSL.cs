@@ -46,7 +46,14 @@ public static class OpenSSL {
         $"sudo openssl req -new -nodes -out {csrPath} -newkey rsa:4096 -keyout {privKey} -subj '/CN={domainToSign.Split('.')[0]}/C=DE/ST={issuer}/L={issuer}/O={issuer}'"
             .Bash();
 
-        return (privKey, csrPath);
+        return (csrPath, privKey);
+    }
+
+    public static string GenerateDHConfig(string path) {
+        var dhPath = Path.Combine(path, "dhparam.pem");
+        $"sudo openssl dhparam -out {dhPath} 4096".Bash();
+
+        return dhPath;
     }
 
     public static string GenerateCSRExtContent(string domainToSign) {

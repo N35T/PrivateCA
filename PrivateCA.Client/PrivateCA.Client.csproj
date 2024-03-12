@@ -11,4 +11,8 @@
       <ProjectReference Include="..\PrivateCA.Core\PrivateCA.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Sharprompt" Version="2.4.5" />
+    </ItemGroup>
+
 </Project>
