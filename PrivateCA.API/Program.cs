@@ -20,18 +20,18 @@ var workerpath = "/worker/temp/";
 var caPath = "/ca/";
 var caName = "peter";
 
-string GetCertContent(CsrDTO data, string workingOn) {
+async Task<string> GetCertContentAsync(CsrDTO data, string workingOn) {
     var csrPath = Path.Combine(workingOn, "csrContent");
     var extPath = Path.Combine(workingOn, "extContent");
 
-    File.WriteAllText(csrPath, data.CsrContent);
-    File.WriteAllText(extPath, data.ExtContent);
+    await File.WriteAllTextAsync(csrPath, data.CsrContent);
+    await File.WriteAllTextAsync(extPath, data.ExtContent);
 
     var outPath = Path.Combine(workingOn, "certContent");
 
     OpenSSL.SignCSRWithCAKey(csrPath, extPath, outPath, caPath, caName, data.Password);
 
-    var certContent = File.ReadAllText(outPath);
+    var certContent = await File.ReadAllTextAsync(outPath);
     return certContent;
 }
 
@@ -48,7 +48,7 @@ static void CheckIfCaExists(string password, string caPath, string caName) {
 
 app.UseHttpsRedirection();
 
-app.MapGet("/signcsr", (CsrDTO data) => {
+app.MapGet("/signcsr", async (CsrDTO data) => {
     CheckIfCaExists(data.Password, caPath, caName);
 
     var guid = Guid.NewGuid().ToString();
@@ -58,7 +58,7 @@ app.MapGet("/signcsr", (CsrDTO data) => {
     Directory.CreateDirectory(workingOn);
 
     try {
-        certContent = GetCertContent(data, workingOn);
+        certContent = await GetCertContentAsync(data, workingOn);
     } finally {
         Directory.Delete(workingOn, true);
     }
