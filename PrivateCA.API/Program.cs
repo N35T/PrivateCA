@@ -1,3 +1,6 @@
+using PrivateCA.Core.DTOs;
+using PrivateCA.Core.OpenSSL;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,26 +18,24 @@ if (app.Environment.IsDevelopment()) {
 
 app.UseHttpsRedirection();
 
-var summaries = new[] {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+app.MapGet("/signcsr", (CsrDTO data) => {
 
-app.MapGet("/weatherforecast", () => {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
+    var csrPath = "/etc/privateca/csrContent";
+    var extPath = "/etc/privateca/extContent";
+
+    File.WriteAllText(csrPath, data.CsrContent); 
+    File.WriteAllText(extPath, data.ExtContent); 
+    var outPath = "/etc/privateca/certContent";
+
+    var caPath = "/etc/privateca/";
+    var caName = "peter";
+
+    OpenSSL.SignCSRWithCAKey(csrPath, extPath, outPath, caPath, caName, data.Password);
+
+    var certContent = File.ReadAllText(outPath); 
+    return new CsrResponseDTO(certContent); ;
+});
+    // .WithName("SignCertificate")
+    // .WithOpenApi();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary) {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
