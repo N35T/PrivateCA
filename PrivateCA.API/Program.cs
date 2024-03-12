@@ -31,26 +31,28 @@ app.MapGet("/signcsr", (CsrDTO data) => {
     Directory.CreateDirectory(workingOn);
 
     try {
-        var csrPath = Path.Combine(workingOn, "csrContent");
-        var extPath = Path.Combine(workingOn, "extContent");
-
-        File.WriteAllText(csrPath, data.CsrContent); 
-        File.WriteAllText(extPath, data.ExtContent);
-
-        var outPath = Path.Combine(workingOn, "certContent");
-
-        OpenSSL.SignCSRWithCAKey(csrPath, extPath, outPath, caPath, caName, data.Password);
-
-        certContent = File.ReadAllText(outPath);
-    } catch {
-        
+        certContent = GetCertContent(data, workingOn);
     }
     finally { 
         Directory.Delete(workingOn);
     }
+
     return new CsrResponseDTO(certContent);
 });
-    // .WithName("SignCertificate")
-    // .WithOpenApi();
+
+string GetCertContent(CsrDTO data, string workingOn) {
+    var csrPath = Path.Combine(workingOn, "csrContent");
+    var extPath = Path.Combine(workingOn, "extContent");
+
+    File.WriteAllText(csrPath, data.CsrContent);
+    File.WriteAllText(extPath, data.ExtContent);
+
+    var outPath = Path.Combine(workingOn, "certContent");
+
+    OpenSSL.SignCSRWithCAKey(csrPath, extPath, outPath, caPath, caName, data.Password);
+
+    var certContent = File.ReadAllText(outPath);
+    return certContent;
+}
 
 app.Run();
