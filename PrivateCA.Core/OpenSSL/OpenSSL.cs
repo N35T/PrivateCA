@@ -34,7 +34,7 @@ public static class OpenSSL {
     public static string GenerateRootCertificate(string caName, string path, string issuer, string password) {
         var privKey = GetCAKeyName(caName, path);
         var caCert = GetCACertName(caName, path);
-        $"openssl req -x509 -new -nodes -key {privKey} -passin pass:{password} -sha256 -days 1826 -out {caCert} '/CN={caName}/C=DE/ST={issuer}/L={issuer}/O={issuer}'"
+        $"openssl req -x509 -new -nodes -key {privKey} -passin pass:{password} -sha256 -days 1826 -out {caCert} -subj '/CN={caName}/C=DE/ST={issuer}/L={issuer}/O={issuer}'"
             .Bash();
 
         return caCert;
