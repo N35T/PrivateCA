@@ -30,7 +30,12 @@ public static class TerminalExtensions {
         };
         process.Start();
         string result = process.StandardOutput.ReadToEnd();
+        string error = process.StandardError.ReadToEnd();
         process.WaitForExit();
+        if (!string.IsNullOrWhiteSpace(error)) {
+            throw new ApplicationException(error);
+        }
+        
         return result;
     }
 }
