@@ -22,9 +22,12 @@ public static class SSLHandler {
         try {
             Console.WriteLine("Generating CSR");
             (var csrPath, var keyPath) = OpenSSL.GenerateCSRAndPrivKey(domain, sslPath, "N35T");
-            Console.WriteLine("Generating Diffie Hellman Parameters");
-            var dhPath = OpenSSL.GenerateDHConfig(sslPath);
-
+            var dhPath = Path.Combine(SSLKeyPath, "dhparam.pem");
+            if (!File.Exists(dhPath)) {
+                Console.WriteLine("No Diffie Hellman params could be located. Generating Diffie Hellman Parameters... (this could take up to 10 minutes)");
+                
+            }
+            
             sslConfig.PrivateKeyPath = keyPath;
             sslConfig.DhConfigPath = dhPath;
 

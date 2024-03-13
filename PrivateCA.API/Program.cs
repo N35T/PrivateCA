@@ -52,7 +52,7 @@ void CheckIfCaExists() {
 
 app.UseHttpsRedirection();
 
-app.MapGet("/signcsr", async ([FromBody]CsrDTO data) => {
+app.MapPost("/signcsr", async ([FromBody]CsrDTO data) => {
     CheckIfCaExists();
 
     var guid = Guid.NewGuid().ToString();
