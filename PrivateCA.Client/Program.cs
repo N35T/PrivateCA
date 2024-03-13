@@ -13,7 +13,7 @@ if(args.Length < 1) {
     return;
 }
 
-if(args[0].ToLower().Equals("registerdomain")){
+if(!args[0].ToLower().Equals("registerdomain")){
     Console.WriteLine(helpText);
     return;
 }

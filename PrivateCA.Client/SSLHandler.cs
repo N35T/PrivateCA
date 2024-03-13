@@ -11,6 +11,12 @@ public static class SSLHandler {
         var defaultColor = Console.ForegroundColor;
         Console.ForegroundColor = ConsoleColor.Green;
         var sslPath = Path.Combine(SSLKeyPath, domain);
+
+        if (Directory.Exists(sslPath)) {
+            Directory.Delete(sslPath, true);
+        }
+        Directory.CreateDirectory(sslPath);
+        
         var sslConfig = new SSLConfig();
 
         try {
