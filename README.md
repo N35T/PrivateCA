@@ -99,4 +99,33 @@ tbd
 tbd
 
 ## Trusting the Certificates
-tbd
+
+To continue, get your `example.ca.crt` file from your Certification Authority.
+
+### Windows
+To install the certificate on windows, right click the `.crt` file and choose `Install Certificate`.
+
+When prompted for the Certification Store, choose `Place all certificates in the following store`.
+Choose `Trusted Root Certification Authorities store` for the certificate.
+
+You can learn more about this process [here](https://learn.microsoft.com/en-us/skype-sdk/sdn/articles/installing-the-trusted-root-certificate)!
+
+Restart your browser and enjoy your SSL.
+
+### Linux
+
+Copy your certificate in the `ca-certificates` folder with
+```bash
+sudo cp example.ca.crt /usr/local/share/ca-certificates
+```
+
+And then update your ca certs
+```bash
+# IF not installed:
+sudo apt-get install -y ca-certificates
+
+
+sudo update-ca-certificates
+```
+
+See [here](https://ubuntu.com/server/docs/security-trust-store) for more information
