@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using PrivateCA.Core.DTOs;
 using PrivateCA.Core.OpenSSL;
 
@@ -51,7 +52,7 @@ void CheckIfCaExists() {
 
 app.UseHttpsRedirection();
 
-app.MapGet("/signcsr", async (CsrDTO data) => {
+app.MapGet("/signcsr", async ([FromBody]CsrDTO data) => {
     CheckIfCaExists();
 
     var guid = Guid.NewGuid().ToString();
