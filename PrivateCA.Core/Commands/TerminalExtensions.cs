@@ -24,6 +24,7 @@ public static class TerminalExtensions {
                 FileName = filename,
                 Arguments = arguments,
                 RedirectStandardOutput = true,
+                RedirectStandardError = true,
                 UseShellExecute = false,
                 CreateNoWindow = false,
             }
