@@ -25,7 +25,7 @@ public static class SSLHandler {
             var dhPath = Path.Combine(SSLKeyPath, "dhparam.pem");
             if (!File.Exists(dhPath)) {
                 Console.WriteLine("No Diffie Hellman params could be located. Generating Diffie Hellman Parameters... (this could take up to 10 minutes)");
-                
+                // TODO: Generate params
             }
             
             sslConfig.PrivateKeyPath = keyPath;

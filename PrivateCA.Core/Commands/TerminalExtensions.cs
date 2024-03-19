@@ -34,8 +34,8 @@ public static class TerminalExtensions {
         string error = process.StandardError.ReadToEnd();
         process.WaitForExit();
         if (!string.IsNullOrWhiteSpace(error)) {
-            Console.WriteLine("An error occured:\n" + error);
-            Console.WriteLine("Continuing with result " + result);
+            //Console.WriteLine("An error occured:\n" + error);
+            //Console.WriteLine("Continuing with result " + result);
         }
         
         return result;
