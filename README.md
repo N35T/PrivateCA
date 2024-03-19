@@ -54,49 +54,28 @@ To solve this problem you can use a simple proxy like [NGINX](https://docs.nginx
 
 Example: Service1 running on port 5001, Service2 running on port 5002
 
-Create the file `/etc/nginx/sites-enabled/service1.yourdomain.local.conf`
-```bash
-server {
-    server_name service1.yourdomain.local;
-    location / {
-            proxy_set_header   X-Real-IP $remote_addr;
-            proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_pass         http://127.0.0.1:5001/;
-            proxy_http_version 1.1;
-            proxy_set_header   Upgrade $http_upgrade;
-            proxy_set_header   Connection "upgrade";
-    }
-
-    listen 80;
-}
-```
-
-Create the file `/etc/nginx/sites-enabled/service2.yourdomain.local.conf`
-```bash
-server {
-    server_name service2.yourdomain.local;
-    location / {
-            proxy_set_header   X-Real-IP $remote_addr;
-            proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_pass         http://127.0.0.1:5002/;
-            proxy_http_version 1.1;
-            proxy_set_header   Upgrade $http_upgrade;
-            proxy_set_header   Connection "upgrade";
-    }
-
-    listen 80;
-}
-```
-
-Now run `nginx -s reload` in your bash!
-
-Both services should now be accessible through their domains!
+Our service creates a file at `/etc/nginx/sites-enabled/service1.yourdomain.local.conf` configuring the proxy to forward the request to service1 based on the requested domain.
 
 ## Creating your CA
 tbd
 
 ## Issuing Certificates
-tbd
+
+To issue certificates and register a domain for your service you need:
+- Your local DNS entries set via your PiHole
+- Your local Service running on a free port
+- The PrivateCA Client built and installed
+
+Now run `privateca` and follow the dialog.
+
+After that, NginX was successfully configured to forward traffic to your domain to the service's port and a SSL certificate was generated and signed by the CA.
+
+Your service should now be reachable and secured via a SSL certificate.
+
+
+![Demo Video on how to register a domain](assets/videos/client-register-demo.mp4)
+
+![Service Secured through SSL Certificate](assets/screenshots/weather-app.png)
 
 ## Trusting the Certificates
 
