@@ -64,6 +64,8 @@ tbd
 To issue certificates and register a domain for your service you need:
 - Your local DNS entries set via your PiHole
 - Your local Service running on a free port
+- The PrivateCA Api is set up and running
+- The PrivateCA Api url is baked into the client
 - The PrivateCA Client built and installed
 
 Now run `privateca` and follow the dialog.
