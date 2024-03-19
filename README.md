@@ -73,7 +73,7 @@ After that, NginX was successfully configured to forward traffic to your domain 
 Your service should now be reachable and secured via a SSL certificate.
 
 
-![Demo Video on how to register a domain](assets/videos/client-register-demo.mp4)
+![Demo Video on how to register a domain](assets/videos/client-register-demo.webm)
 
 ![Service Secured through SSL Certificate](assets/screenshots/weather-app.png)
 
