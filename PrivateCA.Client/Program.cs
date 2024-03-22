@@ -2,6 +2,10 @@
 using PrivateCA.Core;
 using PrivateCA.Core.OpenSSL;
 using Sharprompt;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.IO;
+using System.Xml.Linq;
+using PrivateCA.Core.DTOs;
 
 var registerDomainDisplay = "Register a new Domain";
 var createCADisplay = "Create your own Certification Authority";
@@ -24,17 +28,17 @@ async Task CreateCAAction() {
     var password = Prompt.Password("What is the CA Password");
     var path = Prompt.Input<string>("Your CA path");
 
-    OpenSSL.GenerateRootCertificate(name, path, issuer, password);
-    OpenSSL.GenerateCAPrivateKey(name, path, password);
-
     var domain = Prompt.Input<string>("Your CA domain").ToLower();
     var port = Prompt.Input<int>("On what port is your CA running?");
 
-    Console.WriteLine("Generating SSL Certificates...");
-    SSLConfig config = await SSLHandler.GenerateSSLAsync(domain, password, "hattp://localhost/signcsr");
-    Console.WriteLine("Done with the SSL Configuration!\n\nStarting to register the domain with nginx...");
+    OpenSSL.GenerateRootCertificate(name, path, issuer, password);
+    var privateKeyPath = OpenSSL.GenerateCAPrivateKey(name, path, password);
+    var (csrPath, privKey) = OpenSSL.GenerateCSRAndPrivKey(domain, path, issuer);
 
-    NginX.RegisterDomain(domain, port, config.CertPath, config.PrivateKeyPath, config.DhConfigPath);
+    OpenSSL.SignCSRWithCAKey(csrPath, extPath, outPath, path, name, password);
+    var certContent = await File.ReadAllTextAsync(outPath);
+
+    NginX.RegisterDomain(domain, port, config.CertPath, privateKeyPath, config.DhConfigPath);
 
     Console.WriteLine("Everything went smooooth - Your CA is all set!\nHave a good day!");
 }
@@ -45,7 +49,7 @@ async Task RegisterDomainAction() {
     var password = Prompt.Password("What is the CA Password");
 
     Console.WriteLine("Generating SSL Certificates...");
-    SSLConfig config = await SSLHandler.GenerateSSLAsync(domain, password, "https://peter.n35t.local/signcsr");
+    SSLConfig config = await SSLHandler.GenerateSSLAsync(domain, password);
 
     Console.WriteLine("Done with the SSL Configuration!\n\nStarting to register the domain with nginx...");
 

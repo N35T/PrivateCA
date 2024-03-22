@@ -7,7 +7,7 @@ public static class SSLHandler {
 
     private const string SSLKeyPath = "/etc/privateca/";
 
-    public static async Task<SSLConfig> GenerateSSLAsync(string domain, string password, string caLocation) {
+    public static async Task<SSLConfig> GenerateSSLAsync(string domain, string password) {
         var defaultColor = Console.ForegroundColor;
         Console.ForegroundColor = ConsoleColor.Green;
         var sslPath = Path.Combine(SSLKeyPath, domain);
@@ -35,7 +35,7 @@ public static class SSLHandler {
             var extContent = OpenSSL.GenerateCSRExtContent(domain);
 
             Console.WriteLine("\nWaiting for the signing process...");
-            var privateCa = new PrivateCAApi(caLocation);
+            var privateCa = new PrivateCAApi();
             var csrResponse = await privateCa.SignCsrAsync(new CsrDTO(csrContent, extContent, password));
 
             Console.WriteLine("Reponse from signing service!");

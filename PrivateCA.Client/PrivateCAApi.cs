@@ -5,13 +5,13 @@ namespace PrivateCA.Client;
 
 public class PrivateCAApi {
 
-    //private const string CaLocation = "https://peter.n35t.local/signcsr";
+    private const string CaLocation = "https://peter.n35t.local/signcsr";
 
     private readonly HttpClient _httpClient;
 
-    public PrivateCAApi(string caLocation) {
+    public PrivateCAApi() {
         _httpClient = new HttpClient {
-            BaseAddress = new Uri(caLocation)
+            BaseAddress = new Uri(CaLocation)
         };
     }
 
