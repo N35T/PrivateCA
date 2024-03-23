@@ -31,8 +31,8 @@ async Task CreateCAAction() {
     var port = Prompt.Input<int>("On what port is your CA running?");
 
     Console.WriteLine("Generating Root Certificate and Private Key...");
-    OpenSSL.GenerateRootCertificate(name, path, issuer, password);
     OpenSSL.GenerateCAPrivateKey(name, path, password);
+    OpenSSL.GenerateRootCertificate(name, path, issuer, password);
 
     Console.WriteLine("Generating SSL Certificates...");
     SSLConfig config = await SSLHandler.GenerateSSLAsync(domain, password, new LocalCAApi(name, path, issuer, password));
