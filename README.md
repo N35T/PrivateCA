@@ -57,10 +57,15 @@ Example: Service1 running on port 5001, Service2 running on port 5002
 Our service creates a file at `/etc/nginx/sites-enabled/service1.yourdomain.local.conf` configuring the proxy to forward the request to service1 based on the requested domain.
 
 ## Creating your CA
-tbd
 
-[client-create-ca-demo.webm](https://github.com/N35T/PrivateCA/assets/61502536/74eb768b-adf9-4b55-9eeb-b99a43c4334d)
+Before issuing your first certificates, you need to create your CA.
+You need to build and install the PrivateCA client.
 
+Now run `privateca`, choose `Create your own Certification Authority` and follow the dialog. 
+
+[Demo Video on how to set up a local CA](https://github.com/N35T/PrivateCA/assets/61502536/74eb768b-adf9-4b55-9eeb-b99a43c4334d)
+
+> **Note**: The inputs should match your `appsettings.json` 
 
 ## Issuing Certificates
 
@@ -76,7 +81,6 @@ Now run `privateca` and follow the dialog.
 After that, NginX was successfully configured to forward traffic to your domain to the service's port and a SSL certificate was generated and signed by the CA.
 
 Your service should now be reachable and secured via a SSL certificate.
-
 
 [Demo Video on how to register a domain](https://github.com/N35T/PrivateCA/assets/61502536/1dfe35e6-3a90-4f1a-b86a-ba37280fdcdd)
 
