@@ -62,9 +62,9 @@ Before issuing your first certificates, you need to create your CA.
 You need to build and install the PrivateCA client on the device where the CA will be running.
 
 Now run `privateca`, choose `Create your own Certification Authority` and follow the dialog. 
-> **Note**: The inputs should match your `appsettings.json` 
-
 The creation of the CA happens locally on your client and doesn't require the API to be running. 
+
+> **Note**: The inputs should match your `appsettings.json` 
 
 [Demo Video on how to set up a local CA](https://github.com/N35T/PrivateCA/assets/61502536/74eb768b-adf9-4b55-9eeb-b99a43c4334d)
 
