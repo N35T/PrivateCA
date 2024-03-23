@@ -35,7 +35,7 @@ async Task CreateCAAction() {
     OpenSSL.GenerateCAPrivateKey(name, path, password);
 
     Console.WriteLine("Generating SSL Certificates...");
-    SSLConfig config = await SSLHandler.GenerateSSLAsync(domain, password, new LocalCAApi(issuer, password));
+    SSLConfig config = await SSLHandler.GenerateSSLAsync(domain, password, new LocalCAApi(name, path, issuer, password));
     Console.WriteLine("Done with the SSL Configuration!\n\nStarting to register the domain with nginx...");
 
     NginX.RegisterDomain(domain, port, config.CertPath, config.PrivateKeyPath, config.DhConfigPath);
