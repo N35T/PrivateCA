@@ -27,7 +27,7 @@ app.UseHttpsRedirection();
 
 app.MapPost("/signcsr", async ([FromBody]CsrDTO data) => {
     privateCA.CheckIfCaExists(app.Configuration["Issuer"]!, app.Configuration["Password"]!);
-    return privateCA.Sign(data);
+    return await privateCA.Sign(data);
 });
 
 app.MapGet("/pubkey", async () => {
