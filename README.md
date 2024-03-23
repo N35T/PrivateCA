@@ -59,13 +59,16 @@ Our service creates a file at `/etc/nginx/sites-enabled/service1.yourdomain.loca
 ## Creating your CA
 
 Before issuing your first certificates, you need to create your CA.
-You need to build and install the PrivateCA client.
+You need to build and install the PrivateCA client on the .
 
 Now run `privateca`, choose `Create your own Certification Authority` and follow the dialog. 
+> **Note**: The inputs should match your `appsettings.json` 
+
+The creation of the CA happens locally on your client and doesn't require the API to be running. 
 
 [Demo Video on how to set up a local CA](https://github.com/N35T/PrivateCA/assets/61502536/74eb768b-adf9-4b55-9eeb-b99a43c4334d)
 
-> **Note**: The inputs should match your `appsettings.json` 
+Now you can start issuing certificates with your local CA. This can be done from any client that is running your services.
 
 ## Issuing Certificates
 
