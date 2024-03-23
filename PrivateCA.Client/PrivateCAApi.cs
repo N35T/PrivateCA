@@ -1,9 +1,10 @@
 ﻿using System.Net.Http.Json;
+using PrivateCA.Core.CA;
 using PrivateCA.Core.DTOs;
 
 namespace PrivateCA.Client;
 
-public class PrivateCAApi {
+public class PrivateCAApi : IPrivateCAApi {
 
     private const string CaLocation = "https://peter.n35t.local/signcsr";
 

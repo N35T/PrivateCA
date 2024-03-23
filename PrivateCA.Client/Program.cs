@@ -1,11 +1,10 @@
-﻿using PrivateCA.Client;
+﻿using PrivateCA.API;
+using PrivateCA.Client;
 using PrivateCA.Core;
+using PrivateCA.Core.CA;
 using PrivateCA.Core.OpenSSL;
 using Sharprompt;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.IO;
-using System.Xml.Linq;
-using PrivateCA.Core.DTOs;
+
 
 var registerDomainDisplay = "Register a new Domain";
 var createCADisplay = "Create your own Certification Authority";
@@ -35,10 +34,12 @@ async Task CreateCAAction() {
     var privateKeyPath = OpenSSL.GenerateCAPrivateKey(name, path, password);
     var (csrPath, privKey) = OpenSSL.GenerateCSRAndPrivKey(domain, path, issuer);
 
-    OpenSSL.SignCSRWithCAKey(csrPath, extPath, outPath, path, name, password);
-    var certContent = await File.ReadAllTextAsync(outPath);
+    Console.WriteLine("Generating SSL Certificates...");
+    SSLConfig config = await SSLHandler.GenerateSSLAsync(domain, password, new LocalCAApi(name, issuer, password, path));
 
-    NginX.RegisterDomain(domain, port, config.CertPath, privateKeyPath, config.DhConfigPath);
+    Console.WriteLine("Done with the SSL Configuration!\n\nStarting to register the domain with nginx...");
+
+    NginX.RegisterDomain(domain, port, config.CertPath, config.PrivateKeyPath, config.DhConfigPath);
 
     Console.WriteLine("Everything went smooooth - Your CA is all set!\nHave a good day!");
 }
@@ -49,7 +50,7 @@ async Task RegisterDomainAction() {
     var password = Prompt.Password("What is the CA Password");
 
     Console.WriteLine("Generating SSL Certificates...");
-    SSLConfig config = await SSLHandler.GenerateSSLAsync(domain, password);
+    SSLConfig config = await SSLHandler.GenerateSSLAsync(domain, password, new PrivateCAApi());
 
     Console.WriteLine("Done with the SSL Configuration!\n\nStarting to register the domain with nginx...");
 
