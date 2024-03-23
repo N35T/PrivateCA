@@ -20,7 +20,10 @@ if(action.Equals(registerDomainDisplay)) {
 }
 
 async Task CreateCAAction() {
+    var defaultColor = Console.ForegroundColor;
+    Console.ForegroundColor = ConsoleColor.Yellow;
     Console.WriteLine("INFO: Your following inputs should match your appsettings.json for the API.");
+    Console.ForegroundColor = defaultColor;
 
     var name = Prompt.Input<string>("Your CA name");
     var issuer = Prompt.Input<string>("Your issuer");
