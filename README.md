@@ -8,6 +8,19 @@ To get started issuing your own certificates, there are only a few steps:
 - [Issuing Certificates](#issuing-certificates)
 - [Trusting the Certificates](#trusting-the-certificates)
 
+## Additional Information
+This project was made in the distributed Systeme lecture of the DHBW (SoSe24).
+The minimal requirements specified were:
+- local DNS routing using a Pihole.
+- private CA for SSL certificates in the local network for creating local domains.
+- API endpoint of the CA, that can process the CSR (Certificate Signing Request) created by the certification client.
+
+These mimimal requirements were exceeded and additional features were implemented
+- Certification client can manage local nginx proxy configuration
+- Certification client can set up the CA automatically
+
+Furthermore, we took the time to create a **detailed documentation** on how to reproduce.
+
 ## DNS Setup
 In order to have custom domain names without having to access a public domain, you will have to setup your own DNS server.
 
