@@ -4,6 +4,7 @@ A software suite, used to manage our private certification authority for SSL cer
 To get started issuing your own certificates, there are only a few steps:
 - [DNS Setup](#dns-setup)
 - [Server Setup](#server-setup)
+- [Building the Software](#building-the-software)
 - [Creating your CA](#creating-your-ca)
 - [Issuing Certificates](#issuing-certificates)
 - [Trusting the Certificates](#trusting-the-certificates)
@@ -68,6 +69,47 @@ To solve this problem you can use a simple proxy like [NGINX](https://docs.nginx
 Example: Service1 running on port 5001, Service2 running on port 5002
 
 Our service creates a file at `/etc/nginx/sites-enabled/service1.yourdomain.local.conf` configuring the proxy to forward the request to service1 based on the requested domain.
+
+## Building the Software
+<details>
+  <summary>Installing the client</summary>
+  Requirements:
+  
+  - Linux operating system (Tested on Ubuntu and Raspberry PI OS)
+  - NGINX installed as a reverse proxy for your services
+  - [.NET8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+
+  Now go into the PrivateCA.Client folder and run
+  1. `dotnet restore` -> Downloads and compiles all the dependencies
+  2. `dotnet publish "PrivateCA.Client.csproj" -c Release` -> Builds the project in release mode
+
+  There should be a file `PrivateCA.Client.dll` in the folder `PrivateCA.Client/bin/Release/net8.0/`. This is your executable.
+  To run it: `sudo dotnet ./PrivateCA.Client.dll` (or alias it to privateca)
+
+  Keep in mind: The client does need sudo privilages to write the certification files and to edit the nginx configuration.
+</details>
+
+<details>
+  <summary>Building the API</summary>
+  Requirements:
+  
+  - Docker
+
+  To build and run the API, build the Dockerfile in the `PrivateCA.API` folder.
+  Then you can run the image via:
+  ```sh
+  docker run -d -p 5003:8080 \
+        -e workerpath="/worker" \
+        -e capath="/ca" \
+        -e CaName="NAME OF THE CA" \
+        -e Issuer="NAME OF THE ISSUER" \
+        -e Password="PASSWORD FOR YOUR CA ROOT CERTIFICATE" \
+        --mount type=bind,source=<PATH TO A WORKER DIRECTORY>,target=/worker \
+        --mount type=bind,source=<PATH WHERE THE CA CERTIFICATES WILL BE STORED>,target=/ca \
+        --name private-ca \
+        private-ca
+  ```
+</details>
 
 ## Creating your CA
 
