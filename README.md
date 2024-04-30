@@ -10,7 +10,7 @@ To get started issuing your own certificates, there are only a few steps:
 - [Trusting the Certificates](#trusting-the-certificates)
 
 ## Additional Information
-This project was made in the distributed Systeme lecture of the DHBW (SoSe24).
+This project was made in the distributed Systeme lecture of the DHBW (SoSe24) by Alexander Hagl and Jasmin Hübner.
 The minimal requirements specified were:
 - local DNS routing using a Pihole.
 - private CA for SSL certificates in the local network for creating local domains.
